@@ -82,8 +82,8 @@ resource "aws_security_group" "allow_web" {
     }
   ingress {
       description      = "SSH"
-      from_port        = 2
-      to_port          = 2
+      from_port        = 22
+      to_port          = 22
       protocol         = "tcp"
       cidr_blocks      = ["0.0.0.0/0"]
     }
@@ -116,7 +116,7 @@ resource "aws_network_interface" "web-server-nic" {
 # Assign an elastic ip to the network interface created in previous step
 
 resource "aws_eip" "one" {
-  vpc                       = true
+  domain = "vpc"
   network_interface         = aws_network_interface.web-server-nic.id
   associate_with_private_ip = "10.0.1.50"
   depends_on = [aws_internet_gateway.gw, aws_instance.web-server-instance]
@@ -132,7 +132,7 @@ resource "aws_instance" "web-server-instance" {
     ami = "ami-0747bdcabd34c712a"
     instance_type = "t2.micro"
     availability_zone = "us-east-1a"
-    key_name = "main-key"
+    key_name = "MyKey"
 
     network_interface {
         device_index = 0
