@@ -1,8 +1,6 @@
 provider "aws" {
   region     = "us-east-1"
-   AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
-   AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-} 
+   } 
 
 # VPC
 resource "aws_vpc" "prod-vpc" {
