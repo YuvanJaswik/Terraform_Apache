@@ -21,10 +21,19 @@ pipeline {
                 sh 'terraform plan'
             }
         }
-        stage('Terraform Apply') {
+        
+        stage('Execute Action') {
             steps {
-                sh 'terraform apply -auto-approve'
+                script {
+                    if (params.ACTION == 'apply') {
+                        echo 'Applying changes...'
+                        sh 'terraform apply -auto-approve'
+                    } else if (params.ACTION == 'destroy') {
+                        echo 'Destroying resources...'
+                        sh 'terraform destroy -auto-approve'
+                    }
+                }
             }
-        }
+         }
     }
 }
